@@ -18,14 +18,14 @@ async function getDataSet(category) {
   if (!qs) {
     qs = "";
   }
-  console.log(qs);
+  
   const dataSet = await axios({	
     method: "get", // http method
     url: `http://43.200.41.24:3000/restaurants?category=${qs}`,
     headers: {}, // packet header
     data: {}, // packet body
   });
-  console.log(dataSet);
+  
   return dataSet.data.result;
 }
 
@@ -151,6 +151,7 @@ function makeOutListener(infowindow) {
 
 
 const categoryMap = {
+	all:"전체",
 	korea: "한식",
 	china: "중식",
 	japan: "일식",
@@ -165,8 +166,15 @@ const categoryList = document.querySelector(".category-list");
 categoryList.addEventListener("click", categoryHandler);
 
 async function categoryHandler(event) {
+
 	const categoryId = event.target.id;
 	const category = categoryMap[categoryId];
+	// const categoryItem = document.querySelector('.category-item');
+
+	// if (categoryClick.classList.contains('.category-click')) {
+	// 	categoryItem.classList.remove('category-click');
+	// 	categoryItem.classList.add('category-click');
+	// }
 
 	try {
 		// 데이터 분류

@@ -1,5 +1,24 @@
 const { pool } = require("../../config/database");
 
+exports.isValidUsers = async function (connection, userID, password) {
+  const Query = `SELECT userIdx, nickname FROM Users where userID = ? and password = ? and status = 'A';`;
+  const Params = [userID, password];
+  
+  const rows = await connection.query(Query, Params);
+
+  return rows;
+}
+
+exports.insertUsers = async function (connection, userID, password, nickname) {
+  const Query = `insert into Users(userID, password, nickname) values (?,?,?);`;
+  const Params = [userID, password, nickname];
+
+  const rows = await connection.query(Query, Params);
+
+  return rows;
+};
+
+
 exports.selectRestaurants = async function (connection, category) {
   
   const selectAllRestaurantsQuery = `SELECT title, address, category, videoUrl FROM Restaurants where status = 'A';`;

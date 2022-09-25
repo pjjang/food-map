@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>맛집지도</title>
+    <meta name="author" content="author" />
+    <meta name="description" content="맛집지도 서비스" />
+    <meta name="keywords" content="맛집지도, 유튜버맛집, 맛집유튜버" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./map.css" />
-</head>
-<body>
-<nav>
-    <div class="inner">
+    <link rel="stylesheet" href="./sign.css" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="inner">
         <div class="nav-container">
-            <h1 clas="nav-title">FoodMap</h1>
-            <button class="nav-contact">Contact</button>
+          <h1 class="nav-title"><a href="./index.html">FoodMap</a></h1>
+          
+          <div class="sign-container">
+              <div class="unsigned">
+                <span class="login"><a href="./login.html">로그인</a></span>
+                <span>|</span>
+                <span class="signup"><a href="./signup.html">회원가입</a></span>            
+              </div>
+
+              <div class="signed hidden">
+                <div class="dropdown">
+                  <div class="dropdown-button">
+                    <span class="nickname"></span>님<span class="joing">접속중</span> 
+                  </div>
+                  <div class="dropdown-content">
+                    <button id="sign-out">로그아웃</button>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
-    </div>
-</nav>    
+
+      </div>
+    </nav>
+
 
 <main>
     <section id="category">
         <div class="inner">
             <div class="category-container">
-                <h2 class="category-title">맛집지도 카테고리를 선택해보세요</h2>
+                <h2 class="category-title">카테고리를 선택해보세요</h2>
                 <p id="jj"></p>
                 <div id="app"></div>
                 <div class="category-list">
+                    <button class="category-item category-click" id="all">전체</button>
                     <button class="category-item" id="korea">한식</button>
                     <button class="category-item" id="china">중식</button>    
                     <button class="category-item" id="japan">일식</button>    
@@ -53,5 +78,6 @@
         referrerpolicy="no-referrer">
 </script>
 <script src="axios-script.js"></script>
+<script src="header.js"></script>
 </body>
 </html>
