@@ -150,8 +150,7 @@ function makeOutListener(infowindow) {
 }
 
 
-const categoryMap = {
-	all:"전체",
+const categoryMap = {	
 	korea: "한식",
 	china: "중식",
 	japan: "일식",
