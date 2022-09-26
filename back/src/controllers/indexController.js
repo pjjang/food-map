@@ -72,30 +72,31 @@ exports.createJwt = async function (req, res) {
 exports.createUsers = async function (req, res) {
   const { userID, password, nickname } = req.body;
 
-  const userIDRegExp = /^[a-z]+[a-z0-9]{5,19}$/g;
-  const passwordRegExp =  /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
-  const nicknameRegExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+  // 1. 유저 데이터 검증
+  const userIDRegExp = /^[a-z]+[a-z0-9]{5,19}$/; // 아이디 정규식 영문자로 시작하는 영문자 또는 숫자 6-20
+  const passwordRegExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/; // 비밀번호 정규식 8-16 문자, 숫자 조합
+  const nicknameRegExp = /^[가-힣|a-z|A-Z|0-9|]{2,10}$/; // 닉네임 정규식 2-10 한글, 숫자 또는 영문
 
-  if(!userIDRegExp.test(userID)) {
+  if (!userIDRegExp.test(userID)) {
     return res.send({
       isSuccess: false,
-      code: 400,
-      message: "아이디 정ㄱ식 영문자로 시작하는 영문자 또는 숫자 6-20자내"
+      code: 400, // 요청 실패시 400번대 코드
+      message: "아이디 정규식 영문자로 시작하는 영문자 또는 숫자 6-20",
     });
   }
 
-  if (!passwordRegExp.test (password)) {
+  if (!passwordRegExp.test(password)) {
     return res.send({
-      isSuccesss: false,
-      code: 400,
-      message: "비멀번호 정규식 8-16문자 , 숫자 조합",
+      isSuccess: false,
+      code: 400, // 요청 실패시 400번대 코드
+      message: "비밀번호 정규식 8-16 문자, 숫자 조합",
     });
   }
 
   if (!nicknameRegExp.test(nickname)) {
     return res.send({
       isSuccess: false,
-      code: 400,
+      code: 400, // 요청 실패시 400번대 코드
       message: "닉네임 정규식 2-10 한글, 숫자 또는 영문",
     });
   }
@@ -103,29 +104,52 @@ exports.createUsers = async function (req, res) {
   try {
     const connection = await pool.getConnection(async (conn) => conn);
     try {
-      //아이디 중복검사
-      console.log("연결되지나");
-      //2.DB 입력
-      const [rows] = await indexDao.insertUsers (
+      // 아이디 중복 검사가 필요. 직접 구현해보기.
+
+      //실패코드
+      //DB회원 검증
+      // const [rowsid] = await indexDao.isValidUserID(connection, userID);
+
+           
+      // if (rowsid[0].userID === userID) {
+      //   return res.send({
+      //     isSuccess: false,
+      //     code: 410,
+      //     message: "중복된 아이디가 있습니다."
+      //   });
+      // }
+
+      
+      const [rowsid] = await indexDao.isValidUsers(connection, userID, password);
+
+      if (rowsid.length > 1) {
+        return res.send({
+          isSuccess: false,
+          code: 410,
+          message: "중복된 아이디가 존재합니다."
+        });
+      }
+      // 2. DB 입력
+      const [rows] = await indexDao.insertUsers(
         connection,
         userID,
         password,
         nickname
       );
-      console.log("데이터 가꼬오나 유저아이디: " + rows.userID + "패쓰 :" + rows.password + "닉넴 : " + rows.nickname);
+
       // 입력된 유저 인덱스
       const userIdx = rows.insertId;
-      console.log("토큰두둥"+ userIdx)
-      // JWT 발급
+
+      // 3. JWT 발급
       const token = jwt.sign(
-        {userIdx: userIdx, nickname: nickname},
-        secret.jwtsecret
+        { userIdx: userIdx, nickname: nickname }, // payload 정의
+        secret.jwtsecret // 서버 비밀키
       );
-        console.log("응답받기전토큰" + token)
-      return res.sned({
-        result: { jwt: token},
+
+      return res.send({
+        result: { jwt: token },
         isSuccess: true,
-        code: 200,
+        code: 200, // 요청 실패시 400번대 코드
         message: "회원가입 성공",
       });
     } catch (err) {
@@ -136,8 +160,9 @@ exports.createUsers = async function (req, res) {
     }
   } catch (err) {
     logger.error(`createUsers DB Connection error\n: ${JSON.stringify(err)}`);
+    return false;
   }
-}
+};
 
 
 // 식당 조회

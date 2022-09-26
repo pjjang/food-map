@@ -28,7 +28,7 @@ async function signIn(event) {
   // 3. 로그인 API 요청
   const signInReturn = await axios({
     method: "post", // http method
-    url: url + "/sign-in",
+    url: url + "/log-in",
     headers: {}, // packet header
     data: { userID: userID, password: password }, // packet body
   });
@@ -37,7 +37,7 @@ async function signIn(event) {
   const isValidSignIn = signInReturn.data.code == 200;
 
   if (!isValidSignIn) {
-    return alert("요청에 문제가 생겼습니다.");
+    return alert("아이디가 존재하지않거나 \n비밀번호가 틀립니다.");
   }
 
   // 5. 요청이 성공하면, jwt를 localstorage에 저장하고 main page 이동

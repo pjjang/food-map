@@ -44,11 +44,14 @@ async function signup(event) {
     data: { userID: userID, password: password, nickname: nickname }, // packet body
   });
 
+
+
   // 4. 요청이 성공적이지 않다면, alert message
   const isValidSignUp = signUpReturn.data.code == 200;
-
+  
   if (!isValidSignUp) {
-    return alert("요청에 문제가 생겼습니다.");
+    alert("이미 존재하는 아이디 입니다.");
+    return false;
   }
 
   // 5. 요청이 성공하면, jwt를 localstorage에 저장하고 main page 이동

@@ -9,6 +9,16 @@ exports.isValidUsers = async function (connection, userID, password) {
   return rows;
 }
 
+
+exports.isValidUserID = async function (connection, userID) {
+  const Query = `SELECT userID FROM Users where userID = ? and status = 'A';`;
+  const Params = [userID];
+  
+  const rows = await connection.query(Query, Params);
+
+  return rows;
+}
+
 exports.insertUsers = async function (connection, userID, password, nickname) {
   const Query = `insert into Users(userID, password, nickname) values (?,?,?);`;
   const Params = [userID, password, nickname];
