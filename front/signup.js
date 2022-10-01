@@ -9,7 +9,7 @@
 
 */
 
-let url = "http://43.200.41.24:3000";
+let url = "http://www.masijjeo.shop";
 
 const btnSignUp = document.querySelector("#signup");
 
