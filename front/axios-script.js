@@ -169,12 +169,18 @@ async function categoryHandler(event) {
 	const categoryId = event.target.id;
 	const category = categoryMap[categoryId];	
 	const categoryItem = document.querySelectorAll('.category-item');
+	const categoryAll = document.querySelector('#all');
+	const target = event.target; 
 	
 	categoryItem.forEach((e) => {
 		e.classList.remove("category-click");
 	});
 
-	event.target.classList.add("category-click");
+	if(target.classList.contains("category-list")) {
+		categoryAll.classList.add("category-click");
+	} else {
+		target.classList.add("category-click");	
+	}
 
 	try {
 		// 데이터 분류
