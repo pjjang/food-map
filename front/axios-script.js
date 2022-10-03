@@ -168,17 +168,17 @@ async function categoryHandler(event) {
 
 	const categoryId = event.target.id;
 	const category = categoryMap[categoryId];	
-	const categoryItem = document.querySelectorAll('.category-item');
-	const categoryAll = document.querySelector('#all');
+	const categoryItem = document.querySelectorAll('.category-item');	
 	const target = event.target; 
+	const checkCategoryListClass = target.classList.contains("category-list");
 	
 	categoryItem.forEach((e) => {
-		if(!target.classList.contains("category-list")) {
+		if(!checkCategoryListClass) {
 			e.classList.remove("category-click");
 		}
 	});
 
-	if(target.classList.contains("category-list")) {		
+	if(checkCategoryListClass) {		
 		return false;
 	} else {
 		target.classList.add("category-click");	
