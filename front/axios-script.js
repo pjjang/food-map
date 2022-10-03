@@ -173,14 +173,17 @@ async function categoryHandler(event) {
 	const target = event.target; 
 	
 	categoryItem.forEach((e) => {
-		e.classList.remove("category-click");
+		if(!target.classList.contains("category-list")) {
+			e.classList.remove("category-click");
+		}
 	});
 
-	if(target.classList.contains("category-list")) {
-		categoryAll.classList.add("category-click");
+	if(target.classList.contains("category-list")) {		
+		return false;
 	} else {
 		target.classList.add("category-click");	
 	}
+
 
 	try {
 		// 데이터 분류
