@@ -168,6 +168,14 @@ async function categoryHandler(event) {
 
 	const categoryId = event.target.id;
 	const category = categoryMap[categoryId];
+	const categoryItem = document.querySelectorAll('.category-item');
+	for(i=0; categoryItem.length; i++) {
+		if (categoryItem[i].classList.contains('.category-click')) {	
+			alert("1");
+		} else {
+			alert("2");
+		}
+	}
 	// const categoryItem = document.querySelector('.category-item');
 
 	// if (categoryClick.classList.contains('.category-click')) {
