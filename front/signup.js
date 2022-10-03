@@ -9,7 +9,7 @@
 
 */
 
-let url = "http://www.masijjeo.shop";
+let url = "https://www.masijjeo.shop";
 
 const btnSignUp = document.querySelector("#signup");
 
