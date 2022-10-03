@@ -167,21 +167,14 @@ categoryList.addEventListener("click", categoryHandler);
 async function categoryHandler(event) {
 
 	const categoryId = event.target.id;
-	const category = categoryMap[categoryId];
+	const category = categoryMap[categoryId];	
 	const categoryItem = document.querySelectorAll('.category-item');
-	for(i=0; categoryItem.length; i++) {
-		if (categoryItem[i].classList.contains('.category-click')) {	
-			alert("1");
-		} else {
-			alert("2");
-		}
-	}
-	// const categoryItem = document.querySelector('.category-item');
+	
+	categoryItem.forEach((e) => {
+		e.classList.remove("category-click");
+	});
 
-	// if (categoryClick.classList.contains('.category-click')) {
-	// 	categoryItem.classList.remove('category-click');
-	// 	categoryItem.classList.add('category-click');
-	// }
+	event.target.classList.add("category-click");
 
 	try {
 		// 데이터 분류
