@@ -12,7 +12,7 @@
 
 */
 
-let url = "https://www.masijjeo.shop:3000";
+let url = "https://www.masijjeo.shop";
 
 // 1. 로컬스토리지에서 x-access-token 확인
 const jwt = localStorage.getItem("x-access-token");
@@ -37,7 +37,7 @@ async function setHeader(jwt) {
 
   // 3. 유효한 토큰이 아니라면, 로그아웃
   const isValidJwt = jwtReturn.data.code == 200;
-
+  
   if (!isValidJwt) {
     signOut();
     return false;
